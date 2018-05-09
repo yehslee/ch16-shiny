@@ -3,10 +3,19 @@
 library(shiny)
 library(ggplot2)
 # Create a shiny server that creates a scatterplot. 
-
+server <- function (input, output) {
+  
+  output$scatter <- renderPlot({
+    
+    x_data <- mpg[[input$xvar]]
+    y_data <- mpg[[input$yvar]]
+    ggplot(mpg) +
+      geom_point(mapping = aes(x = x_data, y = y_data), color = input$color, size = input$size)
+  })
+}
 # It should take as an input the x_var, y_var, color, and size
 # Save the result of `renderPlot` to output$scatter
-
+  
     # Store x and y values to plot
 
 
@@ -14,4 +23,4 @@ library(ggplot2)
 
     
     # Create ggplot scatter
-
+shinyServer(server)
